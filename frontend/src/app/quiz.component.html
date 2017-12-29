@@ -11,7 +11,7 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <button *ngIf="quiz.id" (click)="api.putQuiz(quiz)" mat-button>EDIT</button>
+        <button *ngIf="quiz.id" (click)="api.putQuiz(quiz)" mat-button>EDIT QUIZ TITLE</button>
         <button *ngIf="quiz.id" (click)= "quiz = {}" mat-button>NEW</button>
         <button *ngIf="quiz.id" [routerLink]="['/question', quiz.id]" mat-button>EDIT QUIZ</button>
         <button *ngIf="!quiz.id" (click)="api.postQuiz(quiz)" mat-button>SUBMIT</button>
