@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using quiz_backend;
 using quiz_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace quiz_backend.Controllers
 {
@@ -83,6 +84,7 @@ namespace quiz_backend.Controllers
         }
 
         // POST: api/Quizzes
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> PostQuiz([FromBody] Quiz quiz)
         {

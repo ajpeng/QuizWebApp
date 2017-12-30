@@ -15,7 +15,7 @@ import { QuizComponent } from './quiz.component'
 import { QuizzesComponent } from './quizzes.component'
 import { RegisterComponent} from './register.component'
 import { AuthService} from './auth.service'
-import { AuthIntercepter} from './auth.interceptor'
+import { AuthInterceptor} from './auth.interceptor'
 
 
 const routes = [
@@ -24,13 +24,12 @@ const routes = [
   { path : 'question/:quizId' , component: QuestionComponent},
   { path : 'register' , component: RegisterComponent},
   { path : 'quiz' , component: QuizComponent},
-  { path : 'quizzes' , component: QuizzesComponent}
 ]
 
 @NgModule({
   declarations: [
-    AppComponent , QuestionComponent, QuestionsComponent, HomeComponent, NavComponent, QuizComponent,
-    QuizzesComponent , RegisterComponent
+    AppComponent , QuestionComponent, QuestionsComponent, HomeComponent, NavComponent, 
+    QuizComponent, QuizzesComponent , RegisterComponent
   ],
   imports: [
     
@@ -40,7 +39,7 @@ const routes = [
   ],
   providers: [ApiService,AuthService,{
     provide: HTTP_INTERCEPTORS,
-    useClass: AuthIntercepter,
+    useClass: AuthInterceptor,
     multi: true
   }],
   bootstrap: [AppComponent]

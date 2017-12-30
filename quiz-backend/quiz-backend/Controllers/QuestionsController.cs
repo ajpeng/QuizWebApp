@@ -13,6 +13,7 @@ namespace quiz_backend.Controllers
     public class QuestionsController : Controller
     {
         readonly QuizContext context;
+
         public QuestionsController(QuizContext context)
         {
             this.context = context;
@@ -27,14 +28,13 @@ namespace quiz_backend.Controllers
         [HttpGet("{quizId}")]
         public IEnumerable<Models.Question> Get([FromRoute] int quizId)
         {
-
-            return context.Questions.Where(q => q.QuizID == quizId);
+            return context.Questions.Where(q => q.QuizId == quizId);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Models.Question question)
         {
-            var quiz = context.Quiz.SingleOrDefault(q => q.ID == question.QuizID);
+            var quiz = context.Quiz.SingleOrDefault(q => q.ID == question.QuizId);
 
             if (quiz == null)
                 return NotFound();
@@ -45,18 +45,16 @@ namespace quiz_backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id ,[FromBody]Models.Question question)
+        public async Task<IActionResult> Put(int id, [FromBody]Models.Question question)
         {
             if (id != question.ID)
-            {
                 return BadRequest();
-            }
 
             context.Entry(question).State = EntityState.Modified;
+
             await context.SaveChangesAsync();
 
             return Ok(question);
         }
-        
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace quiz_backend.Controllers
 {
@@ -32,6 +34,7 @@ namespace quiz_backend.Controllers
         public async Task<IActionResult> Register([FromBody] Credentials credentials)
         {
             var user = new IdentityUser { UserName = credentials.Email, Email = credentials.Email };
+
             var result = await userManager.CreateAsync(user, credentials.Password);
 
             if (!result.Succeeded)
@@ -39,7 +42,10 @@ namespace quiz_backend.Controllers
 
             await signInManager.SignInAsync(user, isPersistent: false);
 
-            var jwt = new JwtSecurityToken();
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is the secret phrase"));
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+            var jwt = new JwtSecurityToken(signingCredentials: signingCredentials);
             return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
         }
     }

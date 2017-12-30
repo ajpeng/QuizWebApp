@@ -14,6 +14,6 @@ namespace quiz_backend.Models
         public string Answer2 { get; set; }
         public string Answer3 { get; set; }
 
-        public int QuizID { get; set; }
+        public int QuizId { get; set; }
     }
 }
